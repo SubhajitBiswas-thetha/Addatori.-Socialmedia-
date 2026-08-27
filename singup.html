@@ -3,25 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Addatori.singup</title>
+    <title>Addatori.signup</title>
 </head>
 <body>
     <h1>Welcome to <b>Addatori</b></h1><br>
     <p>Welcome aboard! We're happy you're here.</p><br>
-    <div>
-        <label for="name-input">Creat a new account</label><br>
-        <input id="name-input" type="text" value="name" placeholder="Enter Name" >
-        <br><br>
-    </div>
-    <div>
-        <label for="number-input">Enter a valid Numbet</label>
-        <input id="number-input" type="number" value="number" placeholder="Enter Number">
-        <br><br>
-        <label for="password-input">Enter password</label>
-        <input id="password-input" type="password" Value="password" inputmode="numeric" pattern="[0-9]*" maxleangth="6">
-        <br><br>
-        <button type="submit">Verify Number</button>
-        <button type="button" onclick="window.location.href='https://claude.ai/share/55e90b9a-529a-4675-9b0c-ae99d7613760'">Verify Number</button>
-    </div>
+
+    <form id="signup-form">
+        <div>
+            <label for="name-input">Create a new account</label><br>
+            <input id="name-input" type="text" placeholder="Enter Name">
+            <br><br>
+            <p id="name-message" style="color: red;"></p>
+        </div>
+        <div>
+            <label for="number-input">Enter a valid Number</label>
+            <input id="number-input" type="number" placeholder="Enter Number">
+            <br><br>
+            <p id="number-message" style="color: red;"></p>
+
+            <label for="password-input">Enter password</label>
+            <input id="password-input" type="password" placeholder="Enter Password">
+            <br><br>
+            <p id="password-message" style="color: red;"></p>
+
+            <button type="submit">Verify Number</button>
+        </div>
+    </form>
+
+    <script>
+        const form = document.getElementById('signup-form');
+        const nameInput = document.getElementById('name-input');
+        const numberInput = document.getElementById('number-input');
+        const passwordInput = document.getElementById('password-input');
+
+        const nameMessage = document.getElementById('name-message');
+        const numberMessage = document.getElementById('number-message');
+        const passwordMessage = document.getElementById('password-message');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // stop page from reloading
+
+            // clear old messages
+            nameMessage.textContent = '';
+            numberMessage.textContent = '';
+            passwordMessage.textContent = '';
+
+            const nameValue = nameInput.value.trim();
+            const numberValue = numberInput.value.trim();
+            const passwordValue = passwordInput.value.trim();
+
+            let hasError = false;
+
+            // Name must not be empty
+            if (nameValue === '') {
+                nameMessage.textContent = 'Please enter your name.';
+                hasError = true;
+            }
+
+            // Number must be exactly 10 digits (adjust as needed)
+            if (!/^\d{10}$/.test(numberValue)) {
+                numberMessage.textContent = 'Please enter a valid 10-digit number.';
+                hasError = true;
+            }
+
+            // Password must be at least 6 characters
+            if (passwordValue.length < 6) {
+                passwordMessage.textContent = 'Password must be at least 6 characters.';
+                hasError = true;
+            }
+
+            if (hasError) {
+                return; // stop here, do not go to OTP page
+            }
+
+            // Everything valid: go to OTP page
+            window.location.href = 'otp.html';
+        });
+    </script>
 </body>
 </html>
