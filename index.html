@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addatori.OTP.Verify</title>
+</head>
+<body>
+    <form id="otp-form">
+        <div id="otp-section" class="OTP-Verify">
+            <label for="otp-input">Enter OTP:</label><br>
+            <input id="otp-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="Enter OTP">
+            <br><br>
+            <button type="submit">Verify OTP</button>
+            <p id="otp-message" style="color: red;"></p>
+        </div>
+
+        <main>
+            <p>For security purposes, enter the previous password.</p>
+        </main>
+
+        <div>
+            <label for="password-input">Re-enter Password:</label>
+            <input id="password-input" type="password" placeholder="Re-enter Password">
+            <button type="submit">Enter</button>
+            <p id="password-message" style="color: red;"></p>
+        </div>
+    </form>
+
+    <script>
+        const form = document.getElementById('otp-form');
+        const otpInput = document.getElementById('otp-input');
+        const passwordInput = document.getElementById('password-input');
+        const otpMessage = document.getElementById('otp-message');
+        const passwordMessage = document.getElementById('password-message');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // stop page from reloading
+            otpMessage.textContent = '';
+            passwordMessage.textContent = '';
+
+            const otpValue = otpInput.value.trim();
+            const passwordValue = passwordInput.value.trim();
+
+            // Basic OTP validation: must be exactly 6 digits
+            if (otpValue.length !== 6 || !/^\d{6}$/.test(otpValue)) {
+                otpMessage.textContent = 'Please enter a valid 6-digit OTP.';
+                return;
+            }
+
+            // Basic password validation: must not be empty
+            if (passwordValue === '') {
+                passwordMessage.textContent = 'Please re-enter your password.';
+                return;
+            }
+
+            // If both are valid, proceed (replace this with your actual verification logic)
+            alert('OTP and password submitted successfully!');
+            // Example: redirect to another page after successful verification
+            // window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>
